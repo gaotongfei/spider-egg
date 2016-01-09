@@ -1,0 +1,2 @@
+use_tor: true
+tor_port_range: [9053, 9153]
