@@ -14,13 +14,12 @@ def new(target=None):
     except OSError as exc:
         if exc.errno == errno.ENOTDIR:
             shutil.copy(src, dst)
-        else:
-            raise
 
+def main():
+    if args.get(0) == 'new':
+        dst = args.get(1)
+        if dst:
+            new(dst)
 
-if args.get(0) == 'new':
-    dst = args.get(1)
-    if dst:
-        new(dst)
-    else:
-        raise
+if __name__ == '__main__':
+    main()
