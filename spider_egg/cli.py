@@ -6,9 +6,9 @@ import os
 args = arguments.Args()
 
 def new(target=None):
-    base_path = os.path.dirname(os.path.abspath('__file__'))
-    src = os.path.join(base_path, 'template/')
-    dst = os.path.join(base_path, target)
+    base_path = os.path.dirname(os.path.realpath(__file__))
+    src = os.path.join(base_path, 'template')
+    dst = os.path.join(os.path.dirname(os.path.abspath('__file__')),target)
     try:
         shutil.copytree(src, dst)
     except OSError as exc:
