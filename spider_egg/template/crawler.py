@@ -40,6 +40,6 @@ if __name__ == '__main__':
     urls = []
 
     pool = ThreadPool(10)
-    pool.map(get_universities, urls)
+    pool.map(crawler, urls)
     pool.close()
     pool.join()
