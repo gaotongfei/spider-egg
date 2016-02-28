@@ -15,17 +15,21 @@ logging.basicConfig(level=logging.ERROR, filename='error.log')
 base_path = os.path.dirname(os.path.abspath("__file__"))
 cfg = ReadConfig(os.path.join(base_path, 'config.yaml'))
 
-tor_port_range = cfg.config['tor_port_range']
+use_tor = cfg.config['use_tor']
+if use_tor:
+    tor_port_range = cfg.config['tor_port_range']
+
 ua = UserAgent()
 
 def crawler(url):
     try:
         headers = {'User-Agent': ua.random}
-        random_port = lambda l, r: randint(l, r)
-        l_port = tor_port_range[0]
-        r_port = tor_port_range[1]
-        socks.set_default_proxy(socks.SOCKS5, "127.0.0.1", random_port(l_port, r_port))
-        socket.socket = socks.socksocket
+        if use_tor:
+            random_port = lambda l, r: randint(l, r)
+            l_port = tor_port_range[0]
+            r_port = tor_port_range[1]
+            socks.set_default_proxy(socks.SOCKS5, "127.0.0.1", random_port(l_port, r_port))
+            socket.socket = socks.socksocket
         print('scraping')
         r = requests.get(url, verify=False, headers=headers)
         make_soup(r)
